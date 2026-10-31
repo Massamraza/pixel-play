@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pixel Play - Loading</title>
+    <!-- Google Font for Retro Pixel Style -->
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background-color: #000;
+            color: #fff;
+            font-family: 'Press Start 2P', monospace, sans-serif;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+        .loader-container {
+            text-align: center;
+        }
+        .logo-text {
+            font-size: 22px;
+            margin-bottom: 25px;
+            letter-spacing: 2px;
+        }
+        .logo-pixel {
+            color: #fff;
+        }
+        .logo-play {
+            color: #FF0000;
+        }
+        .loader-bar {
+            width: 220px;
+            height: 8px;
+            background: #222;
+            border-radius: 4px;
+            margin: 0 auto 15px auto;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid #333;
+        }
+        .loader-progress {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 0%;
+            background: #FF0000;
+            animation: loadAnim 4s linear forwards;
+        }
+        .loading-text {
+            font-size: 9px;
+            color: #888;
+            letter-spacing: 1px;
+        }
+        @keyframes loadAnim {
+            0% { width: 0%; }
+            100% { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="loader-container">
+        <div class="logo-text">
+            <span class="logo-pixel">PIXEL</span><span class="logo-play">PLAY</span>
+        </div>
+        <div class="loader-bar">
+            <div class="loader-progress"></div>
+        </div>
+        <div class="loading-text">LOADING SYSTEM...</div>
+    </div>
+
+    <script>
+        // Exactly 4 seconds (4000ms) ke baad home.html par redirect ho jayega
+        setTimeout(() => {
+            window.location.href = 'home.html';
+        }, 4000);
+    </script>
+
+</body>
+</html>

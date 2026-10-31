@@ -1,0 +1,223 @@
+.activity-main {
+    max-width: 450px;
+    margin: 30px auto;
+    padding: 0 16px;
+    flex: 1;
+}
+
+.activity-card {
+    background: #111111;
+    border: 1px solid #222;
+    border-radius: 14px;
+    padding: 24px;
+    text-align: center;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.8);
+}
+
+.activity-card h2 {
+    font-size: 18px;
+    color: #fff;
+    margin-bottom: 6px;
+}
+
+.activity-card .subtitle {
+    font-size: 12px;
+    color: #888;
+    margin-bottom: 24px;
+}
+
+.time-display-box {
+    background: #181818;
+    border: 1px solid #333;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 25px;
+}
+
+.time-display-box span {
+    display: block;
+    font-size: 26px;
+    font-weight: bold;
+    color: #ff0000;
+    margin-bottom: 6px;
+    font-family: 'Press Start 2P', monospace;
+}
+
+.time-display-box label {
+    font-size: 11px;
+    color: #aaa;
+    text-transform: uppercase;
+}
+
+.reminder-setting-section {
+    text-align: left;
+    border-top: 1px solid #222;
+    padding-top: 20px;
+}
+
+.reminder-setting-section h3 {
+    font-size: 14px;
+    color: #fff;
+    margin-bottom: 4px;
+}
+
+.reminder-desc {
+    font-size: 11px;
+    color: #888;
+    margin-bottom: 14px;
+    line-height: 1.4;
+}
+
+.picker-label {
+    font-size: 11px;
+    color: #aaa;
+    margin-bottom: 6px;
+    font-weight: 500;
+}
+
+.time-pills-group {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 14px;
+}
+
+.time-pill {
+    flex: 1;
+    background: #181818;
+    border: 1px solid #333;
+    color: #bbb;
+    padding: 10px 0;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.2s ease;
+}
+
+.time-pill:hover {
+    border-color: #555;
+    color: #fff;
+}
+
+.time-pill.active {
+    background: #ff0000;
+    border-color: #ff0000;
+    color: #fff;
+    box-shadow: 0 4px 12px rgba(255, 0, 0, 0.4);
+}
+
+#save-reminder-btn {
+    width: 100%;
+    background: #ff0000;
+    color: #fff;
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.2s;
+    margin-top: 6px;
+}
+
+#save-reminder-btn:hover {
+    background: #cc0000;
+}
+
+.reminder-status {
+    font-size: 11px;
+    color: #4dc4d4;
+    text-align: center;
+    margin-top: 10px;
+}
+
+/* Stylish Modal Popup Styles */
+.reminder-modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    z-index: 9999;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.reminder-modal-card {
+    background: #161616;
+    border: 1px solid #333;
+    border-radius: 16px;
+    padding: 30px 20px;
+    max-width: 310px;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.9);
+    animation: scaleUp 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes scaleUp {
+    from { transform: scale(0.7); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+.alarm-icon-box {
+    width: 60px;
+    height: 60px;
+    margin: 0 auto 16px auto;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.alarm-icon-box.alarm {
+    background: rgba(255, 0, 0, 0.15);
+    border: 2px solid rgba(255, 0, 0, 0.4);
+    color: #ff0000;
+}
+
+.alarm-icon-box.success {
+    background: rgba(40, 167, 69, 0.15);
+    border: 2px solid rgba(40, 167, 69, 0.4);
+    color: #28a745;
+}
+
+.reminder-modal-card h3 {
+    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.reminder-modal-card p {
+    color: #aaa;
+    font-size: 12px;
+    margin-bottom: 24px;
+    line-height: 1.5;
+}
+
+.reminder-modal-card button {
+    background: #ff0000;
+    color: #fff;
+    border: none;
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 13px;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+    box-shadow: 0 4px 15px rgba(255, 0, 0, 0.4);
+}
+
+.reminder-modal-card button:active {
+    transform: scale(0.97);
+}
+
+.reminder-modal-card button:hover {
+    background: #cc0000;
+}
