@@ -1,0 +1,138 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Anime Player Test</title>
+<style>
+body {
+  margin: 0;
+  padding: 16px;
+  background: #101010;
+  color: white;
+  font-family: Arial, sans-serif;
+}
+input, button, select {
+  padding: 12px;
+  margin: 5px 0;
+  border: 0;
+  border-radius: 6px;
+}
+input { width: 60%; }
+button { background: #4dc4d4; }
+#player {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: black;
+  margin-top: 15px;
+}
+iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+#episodes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 15px;
+}
+#episodes button { min-width: 48px; }
+</style>
+</head>
+<body>
+
+<h2>Anime Player Test</h2>
+
+<input id="animeId" value="119"
+       type="number" placeholder="Anime ID">
+<button onclick="loadEpisodes()">Load Episodes</button>
+
+<p id="status">Ready</p>
+<div id="player"></div>
+<div id="episodes"></div>
+
+<script>
+let episodeLinks = [];
+
+async function loadEpisodes() {
+  const id = document.getElementById("animeId").value;
+  const status = document.getElementById("status");
+  const list = document.getElementById("episodes");
+
+  status.textContent = "Loading...";
+  list.innerHTML = "";
+  episodeLinks = [];
+
+  try {
+    const response = await fetch(
+      "https://anipub.org/v1/api/details/" +
+      encodeURIComponent(id)
+    );
+
+    if (!response.ok) {
+      throw new Error("API error: " + response.status);
+    }
+
+    const data = await response.json();
+    const local = data.local;
+
+    if (!local) throw new Error("Episode data unavailable");
+
+    function clean(link) {
+      return typeof link === "string"
+        ? link.replace(/^src=/, "")
+        : "";
+    }
+
+    episodeLinks = [
+      clean(local.link),
+      ...(local.ep || []).map(item => clean(item.link))
+    ];
+
+    episodeLinks = episodeLinks.filter(Boolean);
+
+    if (!episodeLinks.length) {
+      throw new Error("No episode links found");
+    }
+
+    episodeLinks.forEach((url, index) => {
+      const button = document.createElement("button");
+      button.textContent = "EP " + (index + 1);
+      button.onclick = () => playEpisode(index);
+      list.appendChild(button);
+    });
+
+    status.textContent =
+      local.name + " — " + episodeLinks.length +
+      " episode links found";
+
+    playEpisode(0);
+
+  } catch (error) {
+    status.textContent =
+      "Could not load episodes: " + error.message +
+      ". Check internet, API availability and CORS.";
+  }
+}
+
+function playEpisode(index) {
+  const url = episodeLinks[index];
+  if (!url) return;
+
+  const player = document.getElementById("player");
+  player.innerHTML = "";
+
+  const frame = document.createElement("iframe");
+  frame.src = url;
+  frame.allowFullscreen = true;
+  frame.allow = "autoplay; fullscreen; picture-in-picture";
+  frame.referrerPolicy = "strict-origin-when-cross-origin";
+
+  player.appendChild(frame);
+}
+
+</script>
+</body>
+</html>

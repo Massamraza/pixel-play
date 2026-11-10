@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pixel Play - Notifications</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="shortcut icon" href="PP.jpg" type="Image">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+
+        body {
+            background-color: #000000;
+            color: #ffffff;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .header-title {
+            font-size: 18px;
+            font-weight: bold;
+            border-left: 4px solid #ff0000;
+            padding-left: 10px;
+        }
+
+        .clear-btn {
+            background-color: #161616;
+            color: #ff0000;
+            border: 1px solid #333;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.2s;
+            display: none;
+        }
+
+        .clear-btn:hover {
+            background-color: #222;
+        }
+
+        .notifications-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .notification-card {
+            background-color: #121212;
+            border: 1px solid #222;
+            border-radius: 12px;
+            padding: 15px;
+            display: flex;
+            gap: 15px;
+            align-items: flex-start;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        }
+
+        .notification-icon {
+            background-color: #222;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .notification-icon svg {
+            width: 20px;
+            height: 20px;
+            fill: #fff;
+        }
+
+        .notification-content {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .notification-date {
+            font-size: 11px;
+            color: #888;
+        }
+
+        .notification-heading {
+            font-size: 14px;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        .notification-desc {
+            font-size: 11.5px;
+            color: #aaa;
+            line-height: 1.4;
+            margin-top: 2px;
+        }
+
+        .no-notifications {
+            text-align: center;
+            color: #666;
+            font-size: 14px;
+            margin-top: 80px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header-container">
+        <div class="header-title">Notifications</div>
+        <button id="clearAllBtn" class="clear-btn">Clear All</button>
+    </div>
+
+    <div id="notifications-list" class="notifications-container">
+        <!-- Notifications dynamically load honge yahan -->
+        <div class="no-notifications">Loading...</div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-auth.js";
+        import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyA7vBJKtJ0iY61y-3iqCvKByIThAzYOF0o",
+            authDomain: "pixelplay-8ac18.firebaseapp.com",
+            projectId: "pixelplay-8ac18",
+            storageBucket: "pixelplay-8ac18.firebasestorage.app",
+            messagingSenderId: "965382522854",
+            appId: "1:965382522854:web:914d76200b0798d6d1f827",
+            measurementId: "G-NSGMLJ94G4"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        const container = document.getElementById('notifications-list');
+        const clearAllBtn = document.getElementById('clearAllBtn');
+
+        onAuthStateChanged(auth, async (user) => {
+            if (!user) {
+                container.innerHTML = `<div class="no-notifications">No notifications yet</div>`;
+                if (clearAllBtn) clearAllBtn.style.display = 'none';
+                return;
+            }
+
+            await loadNotifications(user);
+        });
+
+        async function loadNotifications(user) {
+            try {
+                const userDocRef = doc(db, "users", user.uid);
+                const docSnap = await getDoc(userDocRef);
+
+                if (docSnap.exists() && docSnap.data().notifications && docSnap.data().notifications.length > 0) {
+                    const notifs = docSnap.data().notifications;
+                    container.innerHTML = '';
+                    if (clearAllBtn) clearAllBtn.style.display = 'block';
+
+                    notifs.forEach(item => {
+                        const html = `
+                            <div class="notification-card">
+                                <div class="notification-icon">
+                                    <svg viewBox="0 0 24 24"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2zm-2 1H8v-6c0-2.48 1.51-4.5 4-4.5s4 2.02 4 4.5v6z"/></svg>
+                                </div>
+                                <div class="notification-content">
+                                    <div class="notification-date">${item.dateStr}</div>
+                                    <div class="notification-heading">Account Login 👤 Notification</div>
+                                    <div class="notification-desc">To disable notifications go Side Menu > Enable Notifications > turn off</div>
+                                </div>
+                            </div>
+                        `;
+                        container.innerHTML += html;
+                    });
+                } else {
+                    container.innerHTML = `<div class="no-notifications">No notifications yet</div>`;
+                    if (clearAllBtn) clearAllBtn.style.display = 'none';
+                }
+            } catch (error) {
+                console.error("Error fetching notifications:", error);
+                container.innerHTML = `<div class="no-notifications">No notifications yet</div>`;
+                if (clearAllBtn) clearAllBtn.style.display = 'none';
+            }
+        }
+
+        if (clearAllBtn) {
+            clearAllBtn.addEventListener('click', async () => {
+                const user = auth.currentUser;
+                if (!user) return;
+
+                try {
+                    const userDocRef = doc(db, "users", user.uid);
+                    await setDoc(userDocRef, { notifications: [] }, { merge: true });
+                    container.innerHTML = `<div class="no-notifications">No notifications yet</div>`;
+                    clearAllBtn.style.display = 'none';
+                } catch (error) {
+                    console.error("Error clearing notifications:", error);
+                }
+            });
+        }
+
+        // Real-time Background Activity Timer Loop
+        setInterval(() => {
+            const user = auth.currentUser;
+            if (user) {
+                let currentSeconds = parseInt(sessionStorage.getItem(`pixelPlayTime_${user.uid}`)) || 0;
+                currentSeconds++;
+                sessionStorage.setItem(`pixelPlayTime_${user.uid}`, currentSeconds);
+            }
+        }, 1000);
+    </script>
+</body>
+</html>

@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pixel Play - Anime Details</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="shortcut icon" href="PP.jpg" type="Image">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        body {
+            background-color: #000000;
+            color: #ffffff;
+            min-height: 100vh;
+            padding-bottom: 40px;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        /* Hero Container containing Header & Banner */
+        .hero-banner-section {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            background: #111;
+        }
+
+        .hero-banner-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            opacity: 0.55;
+        }
+
+        /* Dark overlay gradient covering top to bottom */
+        .hero-banner-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.2) 40%, #000000 100%);
+        }
+
+        /* Transparent Header Overlay on Banner */
+        header {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 18px;
+            z-index: 100;
+        }
+
+        .header-logo-text {
+            font-family: 'Press Start 2P', monospace, sans-serif;
+            font-size: 13px;
+            font-weight: 900;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .logo-pixel { color: #ffffff; }
+        .logo-play { color: #ff0000; }
+
+        .back-btn, .search-icon {
+            cursor: pointer;
+            width: 22px;
+            height: 22px;
+            fill: none;
+            stroke: #ffffff;
+            stroke-width: 2.6;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        /* Main Details Container (Overlapping into Banner) */
+        .details-wrapper {
+            padding: 0 16px;
+            margin-top: -95px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .details-top-grid {
+            display: flex;
+            gap: 14px;
+            align-items: flex-end;
+            margin-bottom: 22px;
+        }
+
+        /* Poster Card */
+        .poster-card {
+            width: 110px;
+            aspect-ratio: 2 / 3;
+            object-fit: cover;
+            border-radius: 12px;
+            border: 1.5px solid rgba(255, 255, 255, 0.2);
+            background: #222;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.9);
+            flex-shrink: 0;
+        }
+
+        /* Right Side Details Column */
+        .info-side-column {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            gap: 5px;
+            min-width: 0;
+        }
+
+        .anime-title {
+            font-size: 19px;
+            font-weight: 700;
+            color: #ffffff;
+            line-height: 1.2;
+            word-break: break-word;
+        }
+
+        .anime-season-ep {
+            font-size: 12.5px;
+            color: #888888;
+            font-weight: 500;
+            margin-bottom: 2px;
+        }
+
+        .anime-meta-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .status-badge {
+            background-color: #143d31;
+            color: #2ecc71;
+            font-size: 10.5px;
+            font-weight: 700;
+            padding: 2.5px 8px;
+            border-radius: 4px;
+        }
+
+        .rating-badge {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            color: #f1c40f;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        /* Action Buttons Grid (Side-by-Side under title text as in Pic 1) */
+        .side-action-buttons {
+            display: flex;
+            gap: 10px;
+            width: 100%;
+        }
+
+        .action-btn-item {
+            flex: 1;
+            background: rgba(30, 30, 30, 0.85);
+            border: 1px solid #2a2a2a;
+            color: #ffffff;
+            padding: 8px 12px;
+            border-radius: 20px;
+            font-size: 12.5px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            cursor: pointer;
+            text-decoration: none;
+            backdrop-filter: blur(4px);
+            transition: background 0.2s;
+        }
+
+        .action-btn-item:hover {
+            background: #282828;
+        }
+
+        /* Big Red Play Button */
+        .play-ep-btn {
+            width: 100%;
+            background-color: #ff0000;
+            color: #ffffff;
+            border: none;
+            border-radius: 12px;
+            padding: 14px;
+            font-size: 15px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            cursor: pointer;
+            box-shadow: 0 4px 18px rgba(255, 0, 0, 0.45);
+            margin-bottom: 18px;
+            text-decoration: none;
+            transition: background 0.2s;
+        }
+
+        .play-ep-btn:hover {
+            background-color: #cc0000;
+        }
+
+        /* Bottom Stats Card (Rank, Score, Studio) */
+        .stats-card {
+            background-color: #121212;
+            border: 1px solid #222222;
+            border-radius: 12px;
+            padding: 16px 12px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            text-align: center;
+        }
+
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            flex: 1;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: #777777;
+            font-weight: 500;
+        }
+
+        .stat-value {
+            font-size: 14.5px;
+            font-weight: 700;
+        }
+
+        .rank-val { color: #2ecc71; }
+        .score-val { color: #2ecc71; }
+        .studio-val { color: #2ecc71; }
+
+        .stat-divider {
+            width: 1px;
+            height: 25px;
+            background-color: #222222;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Hero Banner with Overlay Header -->
+    <div class="hero-banner-section">
+        <header>
+            <svg class="back-btn" onclick="history.back()" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+            <div class="header-logo-text" onclick="window.location.href='home.html'">
+                <span class="logo-pixel">PIXEL</span>
+                <span class="logo-play">PLAY</span>
+            </div>
+            <svg class="search-icon" onclick="window.location.href='home.html'" viewBox="0 0 24 24">
+                <circle cx="11" cy="11" r="7" stroke="currentColor" fill="none"/>
+                <line x1="16.5" y1="16.5" x2="21.5" y2="21.5" stroke="currentColor"/>
+            </svg>
+        </header>
+
+        <img id="bannerImg" src="" alt="Banner" class="hero-banner-img">
+        <div class="hero-banner-overlay"></div>
+    </div>
+
+    <!-- Main Content Section -->
+    <div class="details-wrapper">
+        <div class="details-top-grid">
+            <img id="detailPoster" src="" alt="Poster" class="poster-card">
+            
+            <div class="info-side-column">
+                <h1 id="detailTitle" class="anime-title">Alya Sometimes Hides Her Feeling In Russian</h1>
+                <div id="detailSeasonEp" class="anime-season-ep">Season 01 Episodes 12</div>
+                
+                <div class="anime-meta-row">
+                    <span id="detailStatus" class="status-badge">Finished</span>
+                    <span id="detailRating" class="rating-badge">★ 8.0</span>
+                </div>
+
+                <!-- Trailer & Save Buttons Side-by-Side in Column -->
+                <div class="side-action-buttons">
+                    <a href="javascript:void(0);" id="trailerBtn" class="action-btn-item">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                        <span>Trailer</span>
+                    </a>
+                    <a href="javascript:void(0);" id="saveBtn" class="action-btn-item">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+                        <span id="saveLabel">Save</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Big Red Play Episode Button -->
+        <a href="javascript:void(0);" id="playEpBtn" class="play-ep-btn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="#ffffff"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+            <span id="playBtnText">Play Ep 1</span>
+        </a>
+
+        <!-- Stats Card (Rank, Score, Studio) -->
+        <div class="stats-card">
+            <div class="stat-item">
+                <span class="stat-label">Anime Rank</span>
+                <span id="animeRank" class="stat-value rank-val">#482</span>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="stat-item">
+                <span class="stat-label">Score</span>
+                <span id="animeScore" class="stat-value score-val">7.53</span>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="stat-item">
+                <span class="stat-label">Studio</span>
+                <span id="animeStudio" class="stat-value studio-val">Doga Kobo</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Script to fetch API Data -->
+    <script>
+        async function loadAnimeDetails() {
+            const params = new URLSearchParams(window.location.search);
+            const slug = params.get('anime') || 'tokidoki-bosotto-russiago-de-dereru-tonari-no-alya-san';
+
+            try {
+                const res = await fetch(`https://kitsu.io/api/edge/anime?filter[slug]=${slug}`);
+                const data = await res.json();
+
+                if (data.data && data.data.length > 0) {
+                    const anime = data.data[0];
+                    const attr = anime.attributes;
+
+                    const title = attr.canonicalTitle || attr.titles.en || 'Unknown Anime';
+                    const poster = attr.posterImage?.large || attr.posterImage?.medium || '';
+                    const banner = attr.coverImage?.original || attr.coverImage?.large || poster;
+                    const rating = attr.averageRating ? (attr.averageRating / 10).toFixed(1) : '8.0';
+                    const score = attr.averageRating ? (attr.averageRating / 10).toFixed(2) : '7.53';
+                    const episodes = attr.episodeCount || '12';
+                    const status = attr.status === 'finished' ? 'Finished' : 'Ongoing';
+                    const rank = attr.ratingRank ? `#${attr.ratingRank}` : '#482';
+
+                    // Populate UI
+                    document.getElementById('bannerImg').src = banner;
+                    document.getElementById('detailPoster').src = poster;
+                    document.getElementById('detailTitle').textContent = title;
+                    document.getElementById('detailSeasonEp').textContent = `Season 01 Episodes ${episodes}`;
+                    document.getElementById('detailStatus').textContent = status;
+                    document.getElementById('detailRating').textContent = `★ ${rating}`;
+                    document.getElementById('animeScore').textContent = score;
+                    document.getElementById('animeRank').textContent = rank;
+                    document.getElementById('animeStudio').textContent = 'Doga Kobo';
+
+                    document.getElementById('playEpBtn').href = `watch.html?anime=${slug}&title=${encodeURIComponent(title)}`;
+                }
+            } catch (err) {
+                console.error("Error loading anime details:", err);
+            }
+        }
+
+        loadAnimeDetails();
+    </script>
+</body>
+</html>

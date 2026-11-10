@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pixel Play - Auth</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="login.css">
+    <!-- EmailJS SDK -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+</head>
+<body>
+
+    <div class="auth-container" id="authContainer">
+        <div class="header-logo-text">
+            <span class="logo-pixel">PIXEL</span>
+            <span class="logo-play">PLAY</span>
+        </div>
+
+        <div id="errorMsg" class="error-msg"></div>
+
+        <!-- Login Form -->
+        <div id="loginForm" class="form-box active">
+            <div class="form-group">
+                <label>User Name / Email</label>
+                <div class="input-wrapper">
+                    <svg class="input-icon" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                    <input type="text" id="loginUser" placeholder="@username or email">
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <div class="input-wrapper">
+                    <svg class="input-icon" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                    <input type="password" id="loginPass" placeholder="password">
+                    <svg class="toggle-password" id="toggleLoginPass" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                </div>
+            </div>
+            <div class="form-options">
+                <label><input type="checkbox"> Remember me</label>
+                <a href="#" id="forgotPassLink">Forget password?</a>
+            </div>
+
+            <div class="divider">
+                <span>or continue with</span>
+            </div>
+
+            <button class="google-btn" id="googleLoginBtn">
+                <svg viewBox="0 0 24 24" width="16" height="16"><path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.66-5.17 3.66-9.17z"/><path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.13 0-5.78-2.11-6.73-4.96H1.15v3.14C3.11 21.36 7.22 24 12 24z"/><path fill="#FBBC05" d="M5.27 14.24c-.25-.72-.38-1.49-.38-2.24s.13-1.52.38-2.24V6.62H1.15C.42 8.1 0 9.79 0 11.5s.42 3.4 1.15 4.88l4.12-3.14z"/><path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.22 0 3.11 2.64 1.15 6.62l4.12 3.14c.95-2.85 3.6-4.96 6.73-4.96z"/></svg>
+                Google
+            </button>
+
+            <button class="auth-btn" id="loginBtn">Login</button>
+            <div class="switch-text">
+                Don't have any account?<a id="toRegister">Register</a>
+            </div>
+        </div>
+
+        <!-- Register Form -->
+        <div id="registerForm" class="form-box">
+            <!-- Step 1: Details Input -->
+            <div id="regStep1">
+                <div class="form-group">
+                    <label>User Name</label>
+                    <div class="input-wrapper">
+                        <svg class="input-icon" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                        <input type="text" id="regUser" placeholder="@username">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Your Email</label>
+                    <div class="input-wrapper">
+                        <svg class="input-icon" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                        <input type="email" id="regEmail" placeholder="example@gmail.com">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <div class="input-wrapper">
+                        <svg class="input-icon" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                        <input type="password" id="regPass" placeholder="password">
+                        <svg class="toggle-password" id="toggleRegPass" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                    </div>
+                </div>
+
+                <div class="divider">
+                    <span>or continue with</span>
+                </div>
+
+                <button class="google-btn" id="googleRegisterBtn">
+                    <svg viewBox="0 0 24 24" width="16" height="16"><path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.66-5.17 3.66-9.17z"/><path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.13 0-5.78-2.11-6.73-4.96H1.15v3.14C3.11 21.36 7.22 24 12 24z"/><path fill="#FBBC05" d="M5.27 14.24c-.25-.72-.38-1.49-.38-2.24s.13-1.52.38-2.24V6.62H1.15C.42 8.1 0 9.79 0 11.5s.42 3.4 1.15 4.88l4.12-3.14z"/><path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.22 0 3.11 2.64 1.15 6.62l4.12 3.14c.95-2.85 3.6-4.96 6.73-4.96z"/></svg>
+                    Google
+                </button>
+
+                <button class="auth-btn" id="sendOtpBtn">Send Verification Code</button>
+            </div>
+
+            <!-- Step 2: OTP Verification Box -->
+            <div id="regStep2" style="display: none;">
+                <p style="font-size: 11px; color: #aaa; text-align: center; margin-bottom: 16px; line-height: 1.4;">Enter the 6-digit verification code sent to your email.</p>
+                <div class="form-group">
+                    <label>Verification Code</label>
+                    <div class="input-wrapper">
+                        <input type="text" id="enteredOtp" placeholder="123456" maxlength="6" style="text-align: center; letter-spacing: 4px; font-size: 16px; padding-left: 12px; background-color: #000; border: 1.5px solid #ff0000; border-radius: 8px; color: #fff; width: 100%; padding-top: 10px; padding-bottom: 10px;">
+                    </div>
+                </div>
+                <button class="auth-btn" id="verifyAndRegisterBtn" style="background-color: #ff0000; margin-top: 10px;">Verify & Register</button>
+                <button class="auth-btn" id="backToRegStep1" style="background-color: #222; color: #ccc; border: 1px solid #444; margin-top: 8px;">Back</button>
+            </div>
+
+            <div class="switch-text">
+                Already have an account?<a id="toLogin">Login</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Reset Success Popup Modal -->
+    <div id="resetModal" class="modal-overlay">
+        <div class="modal-card">
+            <div class="mail-icon-circle">
+                <svg viewBox="0 0 24 24" width="28" height="28" stroke="#ff0000" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                    <polyline points="22,6 12,13 2,6"></polyline>
+                </svg>
+            </div>
+            <h2>Sent successfully</h2>
+            <p class="modal-subtext">Password rest link sent to your mail successfully</p>
+            <p class="modal-warning">Don't forget to check you mailbox</p>
+            <button class="modal-close-btn" id="closeModalBtn">Close</button>
+        </div>
+    </div>
+
+    <script type="module" src="login.js"></script>
+</body>
+</html>
