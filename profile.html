@@ -1,0 +1,97 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pixel Play - Profile</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="profile.css">
+    <link rel="shortcut icon" href="PP.jpg" type="Image">
+</head>
+<body>
+  
+    <!-- Main Profile Content -->
+    <main class="profile-main-content">
+        <div class="profile-card-wrapper" id="profileContainer">
+            <h2 class="section-title">User <span>Profile</span></h2>
+            
+            <!-- Profile Picture & Camera Icon -->
+            <div class="avatar-wrapper">
+                <div class="avatar-circle" id="avatarCircle">
+                    <img id="profileImg" src="" alt="" onerror="this.src='blank.jpg';">
+                </div>
+                <label for="imageUpload" class="camera-btn" title="Change Avatar">
+                    <svg viewBox="0 0 24 24" width="14" height="14" stroke="#fff" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+                        <circle cx="12" cy="13" r="4"></circle>
+                    </svg>
+                </label>
+                <input type="file" id="imageUpload" accept="image/*" style="display: none;">
+            </div>
+
+            <!-- User Info Fields -->
+            <div class="field-box">
+                <span class="field-label">Username</span>
+
+                <div class="username-row">
+                    <input type="text" id="profileUser" value="User Name" disabled>
+
+                    <!-- Blue Verified Tick -->
+                    <span id="verifiedBadge" class="verified-badge" hidden
+                          title="Verified account" aria-label="Verified account">
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <circle cx="12" cy="12" r="11" fill="#2498f5"/>
+                            <path d="M7.5 12 L10.5 15 L16.5 9"
+                                  fill="none"
+                                  stroke="#ffffff"
+                                  stroke-width="2"
+                                  stroke-linecap="round"
+                                  stroke-linejoin="round"/>
+                        </svg>
+                    </span>
+                </div>
+            </div>
+
+            <div class="field-box">
+                <span class="field-label">Email Address</span>
+                <input type="text" id="profileEmail" value="****000@gmail.com" disabled>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="action-buttons">
+                <button class="action-btn" id="editBtn">
+                    Edit <svg viewBox="0 0 24 24" width="14" height="14" stroke="#fff" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                </button>
+                <button class="action-btn logout-action" id="logoutBtn">Log out</button>
+            </div>
+
+            <!-- Comment Info Box -->
+            <div class="info-notice">
+                <svg viewBox="0 0 24 24" width="16" height="16" stroke="#ff0000" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                <span>Only registered users can comment on any episode and delete them. Don't forget to login before commenting!</span>
+            </div>
+
+            <!-- Note Section -->
+            <div class="note-section">
+                <span class="note-title">Note:</span>
+                <p>We respect your privacy and are committed to protecting any information you share.</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Logout Confirmation Modal -->
+    <div id="logoutModal" class="modal-overlay">
+        <div class="modal-card">
+            <h2>Log out?</h2>
+            <p>Are you sure you want to log out of your account?</p>
+            <div class="modal-actions">
+                <button class="modal-btn cancel" id="cancelLogout">Cancel</button>
+                <button class="modal-btn confirm" id="confirmLogout">Yes, Logout</button>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="profile.js"></script>
+</body>
+</html>

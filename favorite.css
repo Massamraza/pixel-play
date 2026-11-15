@@ -1,0 +1,97 @@
+/* Home CSS cha exact code import karun tya madhe fat favorite sathi lagnaare classes add kele ahet */
+@import url('home.css');
+
+.history-container {
+    flex: 1;
+    max-width: 420px;
+    width: 100%;
+    margin: 20px auto;
+    padding: 16px;
+    position: relative;
+}
+
+.title-bar {
+    text-align: center;
+    margin-bottom: 12px;
+}
+
+.title-bar h2 {
+    font-size: 16px;
+    font-weight: 600;
+    color: #ffffff;
+}
+
+.divider-line {
+    border: none;
+    border-top: 1px solid #222222;
+    margin-bottom: 14px;
+}
+
+.favorite-empty-card {
+    background: linear-gradient(145deg, #121212, #0a0a0a);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 24px;
+    padding: 45px 20px;
+    text-align: center;
+    margin: 40px auto;
+    max-width: 420px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.9);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.favorite-icon-glow {
+    width: 75px;
+    height: 75px;
+    background: rgba(255, 204, 0, 0.08);
+    border: 1.5px solid rgba(255, 204, 0, 0.3);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    box-shadow: 0 0 20px rgba(255, 204, 0, 0.15);
+}
+
+.favorite-icon-glow svg {
+    width: 36px;
+    height: 36px;
+    stroke: #ffcc00;
+    fill: rgba(255, 204, 0, 0.2);
+    stroke-width: 2;
+}
+
+.favorite-empty-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 8px;
+    letter-spacing: 0.5px;
+}
+
+.favorite-empty-sub {
+    font-size: 12px;
+    color: #888888;
+    line-height: 1.4;
+}
+
+.no-more-data {
+    text-align: center;
+    font-size: 10px;
+    color: #444444;
+    margin: 25px 0;
+    position: relative;
+}
+
+.no-more-data::before, .no-more-data::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: 30%;
+    height: 1px;
+    background-color: #222222;
+}
+.no-more-data::before { left: 0; }
+.no-more-data::after { right: 0; }

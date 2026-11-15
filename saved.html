@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pixel Play - Saved Anime</title>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="home.css">
+<link rel="stylesheet" href="watch.css">
+<link rel="shortcut icon" href="PP.jpg" type="Image">
+<style>
+    .saved-page {
+        width: min(100%, 1180px);
+        margin: 0 auto;
+        padding: 22px 24px 54px;
+        min-height: 65vh;
+    }
+    .saved-heading {
+        font-size: 18px;
+        color: #fff;
+        border-left: 4px solid #ff0000;
+        padding-left: 10px;
+        margin-bottom: 25px;
+    }
+    .remove-saved {
+        width: 100%;
+        margin-top: 8px;
+        background: #191919;
+        border: 1px solid #333;
+        color: #ff4444;
+        border-radius: 6px;
+        padding: 6px 10px;
+        cursor: pointer;
+        font-size: 11px;
+        font-weight: 600;
+    }
+    .recommendation-card {
+        padding: 8px;
+    }
+</style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="left-header">
+            <svg id="menu-btn-icon" class="menu-icon" onclick="toggleSidebar()" viewBox="0 0 24 24">
+                <rect x="3" y="3" width="18" height="18" rx="3" stroke="currentColor" fill="none"/>
+                <line id="switch-line" x1="7" y1="8" x2="7" y2="16" stroke="currentColor"/>
+            </svg>
+            <div class="header-logo-text" onclick="window.location.href='home.html'">
+              <span class="logo-pixel">PIXEL</span>
+              <span class="logo-play">PLAY</span>
+            </div>
+        </div>
+        <div class="right-header">
+            <svg class="search-icon" onclick="toggleSearch()" viewBox="0 0 24 24">
+                <circle cx="11" cy="11" r="7" stroke="currentColor" fill="none"/>
+                <line x1="16.5" y1="16.5" x2="21.5" y2="21.5" stroke="currentColor"/>
+            </svg>
+        </div>
+    </header>
+
+    <!-- Search Bar & Suggestions -->
+    <div id="search-bar-container">
+        <input type="text" id="search-input" placeholder="Search..." autocomplete="off">
+        <button class="clear-search" onclick="clearSearchInput()">×</button>
+    </div>
+    <div id="search-suggestions"></div>
+
+    <div id="screen-overlay" onclick="closeEverything()"></div>
+
+    <!-- Sidebar (Home Matching) -->
+    <div id="sidebar">
+        <div class="sidebar-top-section">
+            <div class="sidebar-auth-icons-card">
+                <a href="javascript:void(0);" onclick="handleProfileClick()" aria-label="Profile">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                </a>
+                <a href="javascript:void(0);" onclick="handleLogoutClick()" aria-label="Logout" style="color: #ff0000;">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path><polyline points="10 17 15 12 10 7"></polyline><line x1="15" y1="12" x2="3" y2="12"></line></svg>
+                </a>
+            </div>
+
+            <div class="sidebar-menu-card">
+                <ul class="sidebar-links">
+                    <li><a href="history.html"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><polyline points="12 6 12 12 16 14" fill="none" stroke="currentColor" stroke-width="2"/></svg> Watch History</a></li>
+                    <li><a href="saved.html"><svg viewBox="0 0 24 24"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg> Watch Saved</a></li>
+                    <li><a href="favorite.html"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> Watch Favorite</a></li>
+                    <li><a href="notification.html"><svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg> All Notifications</a></li>
+                </ul>
+            </div>
+
+            <div class="sidebar-menu-card">
+                <ul class="sidebar-links">
+                    <li><a href="home.html"><svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg> Home</a></li>
+                    <li><a href="pixelplay_about.html"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg> About</a></li>
+                    <li><a href="pixelplay_privacy.html"><svg viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg> Privacy</a></li>
+                </ul>
+            </div>
+
+            <div class="sidebar-menu-card">
+                <ul class="sidebar-links">
+                    <li><a href="#"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><line x1="2" y1="12" x2="22" y2="12" stroke="currentColor" stroke-width="2"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" fill="none" stroke="currentColor" stroke-width="2"/></svg> Language <span style="margin-left: auto; font-size: 13px;">English 🇺🇸</span></a></li>
+                    <li><a href="#"><svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg> Enable Notifications <span style="margin-left: auto;"><label class="switch"><input type="checkbox"><span class="slider round"></span></label></span></a></li>
+                    <li><a href="activity.html"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><line x1="16.5" y1="16.5" x2="21.5" y2="21.5" stroke="currentColor" stroke-width="2"/></svg> Your Activity</a></li>
+                </ul>
+            </div>
+
+            <div class="sidebar-menu-card">
+                <ul class="sidebar-links">
+                    <li><a href="contact.html"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg> Help</a></li>
+                    <li><a href="ad.html"><svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z"/></svg> Your AD's</a></li>
+                </ul>
+            </div>
+        </div>
+        <a href="contact.html" class="request-movie-btn">Request a movie</a>
+    </div>
+
+    <main class="saved-page">
+        <h1 class="saved-heading">Saved Anime</h1>
+        <div id="saved-grid" class="recommendation-grid"></div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <img src="mikasa.png" alt="Mikasa Background" class="footer-bg-img">
+        <div class="footer-content">
+            <div class="footer-logo">
+                <div class="footer-logo-text">
+                    <span class="footer-logo-pixel">PIXEL</span><span class="footer-logo-play">PLAY</span>
+                </div>
+            </div>
+            <div class="social-icons">
+                <a href="#" aria-label="TikTok"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 1 1-5.2-1.74 2.89 2.89 0 0 1 2.31-1.42V8.9a6.34 6.34 0 0 0-3.52 1.05 6.33 6.33 0 1 0 10.31 4.9v-7a8.28 8.28 0 0 0 4.82 1.56v-3.4a4.85 4.85 0 0 1-1.5-.32z"/></svg></a>
+                <a href="#" aria-label="Instagram"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg></a>
+                <a href="#" aria-label="YouTube"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></a>
+                <a href="#" aria-label="Facebook"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
+            </div>
+            <div class="footer-copyright">PixePlay © All Copyright Reserved 2027</div>
+            <div class="footer-disclaimer">This website does not store your data. All contents are provided<br><span class="official-team">by Third Parties</span></div>
+        </div>
+    </footer>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-app.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-auth.js";
+import { getFirestore, collection, getDocs, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-firestore.js";
+
+const firebaseConfig = {
+    apiKey: "AIzaSyA7vBJKtJ0iY61y-3iqCvKByIThAzYOF0o",
+    authDomain: "pixelplay-8ac18.firebaseapp.com",
+    projectId: "pixelplay-8ac18",
+    storageBucket: "pixelplay-8ac18.firebasestorage.app",
+    messagingSenderId: "965382522854",
+    appId: "1:965382522854:web:914d76200b0798d6d1f827",
+    measurementId: "G-NSGMLJ94G4"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+const grid = document.getElementById('saved-grid');
+
+// Sidebar toggle global functions
+window.toggleSidebar = function() {
+    document.getElementById('sidebar').classList.toggle('active');
+    document.getElementById('screen-overlay').style.display = document.getElementById('sidebar').classList.contains('active') ? 'block' : 'none';
+    document.body.classList.toggle('sidebar-open');
+};
+
+window.closeEverything = function() {
+    document.getElementById('sidebar').classList.remove('active');
+    document.getElementById('search-bar-container').style.display = 'none';
+    document.getElementById('search-suggestions').style.display = 'none';
+    document.getElementById('screen-overlay').style.display = 'none';
+    document.body.classList.remove('sidebar-open');
+};
+
+window.toggleSearch = function() {
+    const sb = document.getElementById('search-bar-container');
+    const isVisible = sb.style.display === 'flex';
+    sb.style.display = isVisible ? 'none' : 'flex';
+    document.getElementById('screen-overlay').style.display = isVisible ? 'none' : 'block';
+    if (!isVisible) document.getElementById('search-input').focus();
+};
+
+window.clearSearchInput = function() {
+    document.getElementById('search-input').value = '';
+    document.getElementById('search-suggestions').style.display = 'none';
+};
+
+window.handleProfileClick = function() {
+    const user = auth.currentUser;
+    if (user) {
+        window.location.href = 'profile.html';
+    } else {
+        window.location.href = 'login.html';
+    }
+};
+
+window.handleLogoutClick = async function() {
+    try {
+        await auth.signOut();
+        alert('Logged out successfully.');
+        window.location.href = 'login.html';
+    } catch (e) {
+        console.error('Logout error:', e);
+    }
+};
+
+onAuthStateChanged(auth, async (user) => {
+    if (!user) {
+        grid.innerHTML = '<p class="recommendation-empty">Please login to view your saved anime.</p>';
+        return;
+    }
+
+    try {
+        const querySnapshot = await getDocs(collection(db, 'users', user.uid, 'savedAnime'));
+        if (querySnapshot.empty) {
+            grid.innerHTML = '<p class="recommendation-empty">You have not saved any anime yet.</p>';
+            return;
+        }
+
+        grid.innerHTML = '';
+        querySnapshot.forEach((documentSnap) => {
+            const item = documentSnap.data();
+            const card = document.createElement('div'); 
+            card.className = 'recommendation-card';
+            
+            const link = document.createElement('a'); 
+            link.href = 'watch.html?anime=' + encodeURIComponent(item.slug || '') + '&title=' + encodeURIComponent(item.title || ''); 
+            link.style.color = 'inherit'; 
+            link.style.textDecoration = 'none';
+            
+            const img = document.createElement('img'); 
+            img.src = item.poster || ''; 
+            img.alt = item.title || 'Anime';
+            
+            const title = document.createElement('div'); 
+            title.className = 'rec-title'; 
+            title.textContent = item.title || 'Anime';
+            
+            const meta = document.createElement('div'); 
+            meta.className = 'rec-meta'; 
+            meta.textContent = (item.type || 'Anime') + (item.rating ? ' · ★ ' + item.rating : '');
+            
+            const remove = document.createElement('button'); 
+            remove.textContent = 'Remove'; 
+            remove.className = 'remove-saved'; 
+            remove.type = 'button';
+            
+            remove.addEventListener('click', async () => {
+                try {
+                    await deleteDoc(doc(db, 'users', user.uid, 'savedAnime', item.slug));
+                    card.remove();
+                    if (!grid.children.length) {
+                        grid.innerHTML = '<p class="recommendation-empty">You have not saved any anime yet.</p>';
+                    }
+                } catch (err) {
+                    console.error('Error removing saved anime:', err);
+                }
+            });
+
+            link.append(img, title, meta); 
+            card.append(link, remove); 
+            grid.appendChild(card);
+        });
+    } catch (e) {
+        console.error('Error fetching saved anime:', e);
+        grid.innerHTML = '<p class="recommendation-empty">Could not load saved anime.</p>';
+    }
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pixel Play - Your Activity</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="home.css">
+    <link rel="stylesheet" href="activity.css">
+    <link rel="shortcut icon" href="PP.jpg" type="Image">
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="left-header">
+            <svg id="menu-btn-icon" class="menu-icon" onclick="toggleSidebar()" viewBox="0 0 24 24">
+                <rect x="3" y="3" width="18" height="18" rx="3" stroke="currentColor" fill="none"/>
+                <line id="switch-line" x1="7" y1="8" x2="7" y2="16" stroke="currentColor"/>
+            </svg>
+
+            <div class="header-logo-text" onclick="window.location.href='home.html'">
+              <span class="logo-pixel">PIXEL</span>
+              <span class="logo-play">PLAY</span>
+            </div>
+        </div>
+
+        <div class="right-header">
+            <svg class="search-icon" onclick="toggleSearch()" viewBox="0 0 24 24">
+                <circle cx="11" cy="11" r="7" stroke="currentColor" fill="none"/>
+                <line x1="16.5" y1="16.5" x2="21.5" y2="21.5" stroke="currentColor"/>
+            </svg>
+        </div>
+    </header>
+
+    <!-- Search Bar & Suggestions -->
+    <div id="search-bar-container">
+        <input type="text" id="search-input" placeholder="Search..." autocomplete="off">
+        <button class="clear-search" onclick="clearSearchInput()">×</button>
+    </div>
+    <div id="search-suggestions"></div>
+
+    <!-- Screen Overlay -->
+    <div id="screen-overlay" onclick="closeEverything()"></div>
+
+    <!-- Sidebar with All Options -->
+    <div id="sidebar">
+        <div class="sidebar-top-section">
+            <div class="sidebar-auth-icons-card">
+                <a href="javascript:void(0);" onclick="handleProfileClick()" aria-label="Profile">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                </a>
+                <a href="javascript:void(0);" onclick="handleLogoutClick()" aria-label="Logout" style="color: #ff0000;">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path><polyline points="10 17 15 12 10 7"></polyline><line x1="15" y1="12" x2="3" y2="12"></line></svg>
+                </a>
+            </div>
+
+            <div class="sidebar-menu-card">
+                <ul class="sidebar-links">
+                    <li><a href="history.html"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><polyline points="12 6 12 12 16 14" fill="none" stroke="currentColor" stroke-width="2"/></svg> Watch History</a></li>
+                    <li><a href="#"><svg viewBox="0 0 24 24"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg> Watch Saved</a></li>
+                    <li><a href="#"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> Watch Favorite</a></li>
+                    <li><a href="#"><svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg> All Notifications</a></li>
+                </ul>
+            </div>
+
+            <div class="sidebar-menu-card">
+                <ul class="sidebar-links">
+                    <li><a href="home.html"><svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg> Home</a></li>
+                    <li><a href="pixelplay_about.html"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg> About</a></li>
+                    <li><a href="pixelplay_privacy.html"><svg viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg> Privacy</a></li>
+                </ul>
+            </div>
+
+            <div class="sidebar-menu-card">
+                <ul class="sidebar-links">
+                    <li><a href="#"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><line x1="2" y1="12" x2="22" y2="12" stroke="currentColor" stroke-width="2"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" fill="none" stroke="currentColor" stroke-width="2"/></svg> Language <span style="margin-left: auto; font-size: 13px;">English 🇺🇸</span></a></li>
+                    <li><a href="#"><svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg> Enable Notifications <span style="margin-left: auto;"><label class="switch"><input type="checkbox"><span class="slider round"></span></label></span></a></li>
+                    <li><a href="activity.html" style="color: #ff0000;"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><line x1="16.5" y1="16.5" x2="21.5" y2="21.5" stroke="currentColor" stroke-width="2"/></svg> Your Activity</a></li>
+                </ul>
+            </div>
+
+            <div class="sidebar-menu-card">
+                <ul class="sidebar-links">
+                    <li><a href="contact.html"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg> Help</a></li>
+                    <li><a href="ad.html"><svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z"/></svg> Your AD's</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <a href="contact.html" class="request-movie-btn">Request a movie</a>
+    </div>
+
+    <!-- Main Activity Container -->
+    <main class="activity-main">
+        <div class="activity-card">
+            <h2>Your Time Activity</h2>
+            <p class="subtitle">Track how long you stay on Pixel Play</p>
+
+            <div class="time-display-box">
+                <span id="total-time-text">0m 0s</span>
+                <label>Total Time Spent Today</label>
+            </div>
+
+            <div class="reminder-setting-section">
+                <h3>Set Time Reminder</h3>
+                <p class="reminder-desc">Get a popup notification when your browsing time reaches the target limit.</p>
+                
+                <div class="picker-label">Select Hours</div>
+                <div class="time-pills-group" id="hours-group">
+                    <button type="button" class="time-pill" data-val="0" onclick="selectTime('hours', 0)">0h</button>
+                    <button type="button" class="time-pill active" data-val="1" onclick="selectTime('hours', 1)">1h</button>
+                    <button type="button" class="time-pill" data-val="2" onclick="selectTime('hours', 2)">2h</button>
+                    <button type="button" class="time-pill" data-val="3" onclick="selectTime('hours', 3)">3h</button>
+                    <button type="button" class="time-pill" data-val="4" onclick="selectTime('hours', 4)">4h</button>
+                </div>
+
+                <div class="picker-label">Select Minutes</div>
+                <div class="time-pills-group" id="minutes-group">
+                    <button type="button" class="time-pill" data-val="0" onclick="selectTime('minutes', 0)">0m</button>
+                    <button type="button" class="time-pill" data-val="15" onclick="selectTime('minutes', 15)">15m</button>
+                    <button type="button" class="time-pill active" data-val="30" onclick="selectTime('minutes', 30)">30m</button>
+                    <button type="button" class="time-pill" data-val="45" onclick="selectTime('minutes', 45)">45m</button>
+                </div>
+
+                <button id="save-reminder-btn" onclick="saveReminderTarget()">Set Reminder</button>
+                <div id="reminder-status" class="reminder-status"></div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Reminder Popup Modal -->
+    <div id="reminder-popup-modal" class="reminder-modal-overlay">
+        <div class="reminder-modal-card">
+            <div class="alarm-icon-box" id="modal-icon-box"></div>
+            <h3 id="modal-title">Time Limit Reached!</h3>
+            <p id="popup-message">You set time has been completed.</p>
+            <button onclick="closeReminderPopup()">OK</button>
+        </div>
+    </div>
+
+    <script type="module" src="activity.js"></script>
+</body>
+</html>
